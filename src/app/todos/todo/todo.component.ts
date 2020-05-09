@@ -19,17 +19,27 @@ export class TodoComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = this.route.snapshot.params['id'];
-    this.todoService.retrieveTodo('tamara', this.id).subscribe((response) => {
-      this.todo = response;
-    });
+    this.todo = new Todo(this.id, '', false, new Date());
+    if (this.id != -1) {
+      this.todoService.retrieveTodo('tamara', this.id).subscribe((response) => {
+        this.todo = response;
+      });
+    }
   }
 
   save() {
-    this.todoService
-      .updateTodo('tamara', this.id, this.todo)
-      .subscribe((data) => {
+    if (this.id == -1) {
+      this.todoService.createTodo('tamara', this.todo).subscribe((data) => {
         console.log(data);
         this.router.navigate(['todos']);
       });
+    } else {
+      this.todoService
+        .updateTodo('tamara', this.id, this.todo)
+        .subscribe((data) => {
+          console.log(data);
+          this.router.navigate(['todos']);
+        });
+    }
   }
 }
