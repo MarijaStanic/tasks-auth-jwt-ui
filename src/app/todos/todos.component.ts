@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TodoDataService } from '../service/data/todo-data.service';
+import { Router } from '@angular/router';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 export class Todo {
   constructor(
@@ -23,7 +25,7 @@ export class TodosComponent implements OnInit {
     new Todo(2, 'Become an Expert in Angular', false, new Date())
   ];*/
 
-  constructor(private todoService: TodoDataService) {}
+  constructor(private todoService: TodoDataService, private router: Router) {}
 
   ngOnInit(): void {
     this.getAllTodos();
@@ -40,5 +42,9 @@ export class TodosComponent implements OnInit {
       this.message = 'Deleted Successfully!';
       this.getAllTodos();
     });
+  }
+
+  updateTodo(id) {
+    this.router.navigate(['todo', id]);
   }
 }
