@@ -11,7 +11,7 @@ export class LoginComponent implements OnInit {
   username: String;
   password: String;
   invalidLogin: boolean = false;
-  errorMessage: String;
+  errorMessage: String = "Invalid credentials";
 
   constructor(
     private router: Router,
